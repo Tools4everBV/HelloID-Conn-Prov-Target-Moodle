@@ -62,7 +62,7 @@ try {
                 $splatParams = @{
                     Uri         = "$($config.BaseUrl)/webservice/rest/server.php?wstoken=$($config.token)&wsfunction=core_user_create_users&moodlewsrestformat=json"
                     Method      = 'POST'
-                    Body        = ($account.psObject.Properties.ForEach({"users[0][$($_.Name)]=$($_.Value)&"}) -join "").TrimEnd("&")
+                    Body        = ($account.psObject.Properties.ForEach({"users[0][$($_.Name)]=$($_.Value)"}) -join "&")
                     ContentType = 'application/x-www-form-urlencoded'
                 }
                 $response = Invoke-RestMethod @splatParams
@@ -78,7 +78,7 @@ try {
                 $splatParams = @{
                     Uri         = "$($config.BaseUrl)/webservice/rest/server.php?wstoken=$($config.token)&wsfunction=core_user_update_users&moodlewsrestformat=json"
                     Method      = 'POST'
-                    Body        = "users[0][id]=$($responseUser[0].id)&"+($account.psObject.Properties.ForEach({"users[0][$($_.Name)]=$($_.Value)&"}) -join "").TrimEnd("&")
+                    Body        = "users[0][id]=$($responseUser[0].id)&"+($account.psObject.Properties.ForEach({"users[0][$($_.Name)]=$($_.Value)"}) -join "&")
                     ContentType = 'application/x-www-form-urlencoded'
                 }
                 # The update call does not give back a response when the update was successful.
